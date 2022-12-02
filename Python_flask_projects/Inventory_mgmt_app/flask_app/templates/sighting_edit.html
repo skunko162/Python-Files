@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container m-3">
+        <div class="d-flex justify-content-between">
+            <h1>Sasquach Websighting</h1>
+            <h3>{{logged_user.first_name}} {{logged_user.last_name}}</h3>
+            <h1>Edit this Sighting</h1>
+            <div>
+                <a href="/dashboard" class="btn btn-primary"> Home</a>
+                <a href="/users/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+            {%for message in get_flashed_messages()%}
+            <p class="text-danger">{{message}}</p>
+            {% endfor %}
+            <form action="/sas_sighting/{{this_sighting.id}}/update" method = 'post'>
+                <label for="location">Location:</label>
+                <input type="text" name="location" id="location" value = "{{this_sighting.location}}">
+                <label for="what_happened">Description:</label>
+                <textarea name="what_happened" id="what_happened" cols="30" rows="10">{{this_sighting.what_happened}}</textarea>
+                <div>
+                    <label for="date_of_sighting">Date of Sighting:</label>
+                    <input type="date" name="date_of_sighting" id = date_of_sighting value="{{this_sighting.date_of_sighting}}">
+                    <label for="num_of_sas">number of Sasquaches:</label>
+                    <input type="number" name="num_of_sas" id = 'num_of_sas' value="{{this_sighting.num_of_sas}}">
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+            
+    </div>
+    
+</body>
+</html>

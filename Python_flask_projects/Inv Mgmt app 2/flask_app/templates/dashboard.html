@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container m-3">
+        <h1 class="text-center">Inventory Dashboard</h1>
+        <h5>User: {{logged_user.first_name}} {{logged_user.last_name}}</h5>
+        <div class="d-flex justify-content-end">
+            <div>
+                <a href="/items/new" class="btn btn-primary"> Add an Item</a>
+                <a href="/user/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+        <h5 class="text-center">All Current Inventory</h5>
+        <table class = "table table-primary table-striped">
+            <thead>
+                <th>
+                    <tr>
+                        <th>#</th>
+                        <th>SKU</th>
+                        <th>Item Name</th>
+                        <th>Item Description</th>
+                        <th>Units</th>
+                        <th>Unit Price</th>
+                        <th>Total Value</th>
+                        <th>action</th>
+                    </tr>
+                </th>
+            </thead>
+            <tbody>
+                {% for one_item in all_items%}
+                <tr>
+                    <td>Placeholder</td>
+                    <td>{{one_item.item_number}}</td>
+                    <td>{{one_item.item_name}}</td>
+                    <td>{{one_item.product_description}}</td>
+                    <td>{{one_item.units}}</td>
+                    <td>{{one_item.price}}</td>
+                    <td>{{one_item.units * one_item.price|float}}</td>
+                    <td>
+                        <a href="/items/{{one_item.id}}/view">View</a>
+                        <a href="/items/{{one_item.id}}/edit">update</a>
+                        <a href="/items/{{one_item.id}}/delete">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5 class="text-center">Inventory Below Stock Limits</h5>
+        <table class = "table table-primary table-striped">
+            <tr>
+                <th>Item Number</th>
+                <th>Item Name</th>
+                <th>product Description</th>
+                <th>units on Hand</th>
+                <th>Lower Stock Limit</th>
+                <th>Unite Price</th>
+                <th>Action</th>
+            </tr>
+            {%for one_item in all_items%}
+                {%if one_item.units <= one_item.lower_stock_limit%}
+            <tbody>
+                <tr>
+                    <td>{{one_item.item_number}}</td>
+                    <td>{{one_item.item_name}}</td>
+                    <td>{{one_item.product_description}}</td>
+                    <td>{{one_item.units}}</td>
+                    <td>{{one_item.lower_stock_limit}}</td>
+                    <td>{{one_item.price}}</td>
+                    <td>
+                        <a href="/items/{{one_item.id}}" data-bs-toggle="view_item.html" data-bs-target = "#view_item.html">View</a>
+                        <a href="/items/{{one_item.id}}/edit">update</a>
+                        <a href="/items/{{one_item.id}}/delete">Delete</a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

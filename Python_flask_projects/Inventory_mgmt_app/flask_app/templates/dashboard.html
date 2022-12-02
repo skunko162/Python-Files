@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasquach Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container m-3">
+        <h1>Sasquach Websighting</h1>
+        <h3>{{logged_user.first_name}} {{logged_user.last_name}}</h3>
+        <div class="d-flex justify-content-between">
+        <h5>All posted recipes:</h5>
+            <div>
+                <a href="/items/new" class="btn btn-primary"> Report a sighting</a>
+                <a href="/user/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+        <table class = "table table-dark">
+            <thead>
+                <th>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Part number</th>
+                        <th>label</th>
+                        <th>Starting Inventory</th>
+                        <th>In Process</th>
+                        <th>inventory Received</th>
+                        <th>Allocated Inventory</th>
+                        <th>Minimum Req Inv</th>
+                        <th>LOT number</th>
+                        <th>Date Produced</th>
+                        <th>ShipHold Date</th>
+                        <th>EXP Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </th>
+            </thead>
+            <tbody>
+                {% for one_item in all_items%}
+                <tr>
+                    <td>{{one_item.item_name}}</td>
+                    <td>{{one_item.item_number}}</td>
+                    <td>{{one_item.self_life}}</td>
+                    <td>{{one_item.ship_hold}}</td>
+                    <td>{{one_item.incre}}</td>
+                    <td>{{one_item.unit_size}}</td>
+                    
+                    <td>
+                        <a href="/items/{{one_item.id}}">View</a>
+                        {% if logged_user.id == one_sighting.reporter.id%}
+                        <a href="/items/{{one_item.id}}/edit">Edit</a>
+                        <a href="/items/{{one_item.id}}/delete">Delete</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+    
+</body>
+</html>
